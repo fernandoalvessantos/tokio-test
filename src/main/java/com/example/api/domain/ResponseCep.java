@@ -1,50 +1,20 @@
 package com.example.api.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+public class ResponseCep {
 
-import javax.persistence.*;
-
-@Entity
-public class Endereco {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column
     private String cep;
 
-    @Column
     private String logradouro;
 
-    @Column
     private String complemento;
 
-    @Column
     private String bairro;
 
-    @Column
     private String localidade;
 
-    @Column
     private String uf;
 
-    @ManyToOne
-    @JoinColumn(name = "CUSTOMER_ID")
-    @JsonBackReference
-    private Customer customer;
-
-    public Endereco(){}
-
-    public Endereco(String cep, String logradouro, String complemento, String bairro, String localidade, String uf) {
-        this.cep = cep;
-        this.logradouro = logradouro;
-        this.complemento = complemento;
-        this.bairro = bairro;
-        this.localidade = localidade;
-        this.uf = uf;
-    }
+    private String erro;
 
     public String getCep() {
         return cep;
@@ -94,19 +64,11 @@ public class Endereco {
         this.uf = uf;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getErro() {
+        return erro;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setErro(String erro) {
+        this.erro = erro;
     }
 }
