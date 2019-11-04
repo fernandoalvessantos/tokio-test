@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.example.api.domain.Endereco;
 import com.example.api.service.EnderecoService;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import com.example.api.service.CustomerService;
 
 import javax.validation.Valid;
 
+@Api(value = "/customers",
+		authorizations = {@Authorization(value = "Basic")})
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
@@ -29,6 +32,18 @@ public class CustomerController {
 		this.service = service; this.enderecoService = enderecoService;
 	}
 
+	@ApiOperation(value = "Lista os Customers",
+			response = Customer.class,
+			responseContainer = "Page",
+			notes = "Este operação lista os Customers cadastrados")
+	@ApiResponses(value= {
+			@ApiResponse(
+					code=200,
+					message="Retorna um Page<Customer> com status 200",
+					response=Customer.class,
+					responseContainer = "Page"
+			)
+	})
 	@GetMapping
 	public Page<Customer> findAll(@RequestParam( value = "page", required = false, defaultValue = "0") int page) {
 		return service.findAll(page);
