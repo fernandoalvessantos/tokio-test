@@ -5,6 +5,7 @@ import com.example.api.exception.CepNaoEncontradoException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,6 +41,20 @@ public class ResourceExceptionHandler {
         erro.setTitulo("CEP Não Encontrado");
         erro.setMensagem(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<DetalheErro> handleValidationException(MethodArgumentNotValidException ex){
+        StringBuilder validacoes = new StringBuilder("");
+        ex.getBindingResult().getAllErrors().forEach((error) ->{
+            validacoes.append(error.getDefaultMessage());
+            validacoes.append("\n");
+        });
+        DetalheErro erro = new DetalheErro();
+        erro.setCodigo(400L);
+        erro.setTitulo("Erro em validações");
+        erro.setMensagem(validacoes.toString());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 
 

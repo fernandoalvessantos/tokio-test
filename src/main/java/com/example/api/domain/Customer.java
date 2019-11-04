@@ -12,16 +12,16 @@ import java.util.List;
 public class Customer {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "CUSTOMER_ID_GEN")
 	private Long id;
 
 	@Column(nullable = false)
-	@NotEmpty
+	@NotEmpty(message = "Campo name é obrigatório")
 	private String name;
 
 	@Column(nullable = false)
-	@NotEmpty
-	@Email
+	@NotEmpty(message = "Campo email é obrigatório")
+	@Email(message = "Campo email é inválido")
 	private String email;
 
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
