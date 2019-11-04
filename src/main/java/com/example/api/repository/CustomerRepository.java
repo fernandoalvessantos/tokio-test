@@ -13,4 +13,6 @@ public interface CustomerRepository extends CrudRepository<Customer, Long>, Pagi
 
 	Page<Customer> findAllByOrderByNameAsc(Pageable pageable);
 
+	Customer findByName(String name);
+
 }

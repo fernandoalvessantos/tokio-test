@@ -14,12 +14,9 @@ import com.example.api.repository.CustomerRepository;
 @Service
 public class CustomerService {
 
+	@Autowired
 	private CustomerRepository repository;
 
-	@Autowired
-	public CustomerService(CustomerRepository repository) {
-		this.repository = repository;
-	}
 
 	public Page<Customer> findAll(int page) {
 		PageRequest pageRequest = PageRequest.of(page, 2);
@@ -37,6 +34,10 @@ public class CustomerService {
 	public void deleteCustomer(Long id){
 		Optional<Customer> customer = repository.findById(id);
 		repository.delete(customer.get());
+	}
+
+	public Customer findByName(String name){
+		return repository.findByName(name);
 	}
 
 }
